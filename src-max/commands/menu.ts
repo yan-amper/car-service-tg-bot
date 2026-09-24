@@ -1,7 +1,7 @@
 import { Keyboard } from '@maxhub/max-bot-api';
 import { bot } from '../config';
 import { akbReplies, contactReplies } from '../text';
-import { editMessageText, goBackMenu, pinMessage } from '../lib';
+import { ackCallback, editMessageText, goBackMenu, pinMessage } from '../lib';
 import { mainMenu } from '../buttons';
 
 bot.command('menu', async (ctx) => {
@@ -10,12 +10,12 @@ bot.command('menu', async (ctx) => {
 });
 
 bot.action('menu_main', async (ctx) => {
-  await ctx.answerOnCallback({ notification: '' });
+  await ackCallback(ctx);
   await editMessageText(ctx, '📋 Главное меню:', mainMenu());
 });
 
 bot.action('menu_akb', async (ctx) => {
-  await ctx.answerOnCallback({ notification: '' });
+  await ackCallback(ctx);
   await editMessageText(
     ctx,
     '🔋 Всё про АКБ:',
@@ -50,7 +50,7 @@ bot.action('menu_akb', async (ctx) => {
 });
 
 bot.action('menu_contact', async (ctx) => {
-  await ctx.answerOnCallback({ notification: '' });
+  await ackCallback(ctx);
   await editMessageText(
     ctx,
     '📞 Связаться с нами:',
@@ -70,7 +70,7 @@ bot.action('menu_contact', async (ctx) => {
 
 for (const [key, message] of Object.entries(akbReplies)) {
   bot.action(key, async (ctx) => {
-    await ctx.answerOnCallback({ notification: '' });
+    await ackCallback(ctx);
     await editMessageText(
       ctx,
       message,
@@ -84,7 +84,7 @@ for (const [key, message] of Object.entries(akbReplies)) {
 
 for (const [key, message] of Object.entries(contactReplies)) {
   bot.action(key, async (ctx) => {
-    await ctx.answerOnCallback({ notification: '' });
+    await ackCallback(ctx);
     await editMessageText(
       ctx,
       message,
@@ -97,7 +97,7 @@ for (const [key, message] of Object.entries(contactReplies)) {
 }
 
 bot.action('promotions', async (ctx) => {
-  await ctx.answerOnCallback({ notification: '' });
+  await ackCallback(ctx);
   await editMessageText(
     ctx,
     `<b>🎁 Акции и скидки</b>
@@ -130,7 +130,7 @@ bot.action('promotions', async (ctx) => {
 });
 
 bot.action('service', async (ctx) => {
-  await ctx.answerOnCallback({ notification: '' });
+  await ackCallback(ctx);
   await editMessageText(
     ctx,
     `📅 <b>ТО и Гарантия</b>\nПокупал АКБ с расширенной гарантией? Тогда не забывай приезжать на ТО! Всё просто — напоминания приходят заранее.`,
@@ -145,7 +145,7 @@ bot.action('service', async (ctx) => {
 });
 
 bot.action('warranty_how', async (ctx) => {
-  await ctx.answerOnCallback({ notification: '' });
+  await ackCallback(ctx);
   await editMessageText(
     ctx,
     `🔧 <b>Расширенная гарантия — что это такое?</b>
@@ -167,7 +167,7 @@ bot.action('warranty_how', async (ctx) => {
 });
 
 bot.action('warranty_skip', async (ctx) => {
-  await ctx.answerOnCallback({ notification: '' });
+  await ackCallback(ctx);
   await editMessageText(
     ctx,
     `🔧 <b>Что будет если пропустить ТО</b>? 
@@ -190,7 +190,7 @@ bot.action('warranty_skip', async (ctx) => {
 });
 
 bot.action('faq', async (ctx) => {
-  await ctx.answerOnCallback({ notification: '' });
+  await ackCallback(ctx);
   await editMessageText(
     ctx,
     `📌 <b>Часто задаваемые вопросы</b>

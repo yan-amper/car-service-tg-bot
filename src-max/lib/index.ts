@@ -12,3 +12,4 @@ export * from './request';
 export * from './selectBatteryLastStep';
 export * from './showStart';
 export * from './createImagePath';
+export * from './ackCallback';

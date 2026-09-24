@@ -1,6 +1,6 @@
 import { Keyboard } from '@maxhub/max-bot-api';
 import { bot } from '../config';
-import { editMessageText } from '../lib';
+import { ackCallback, editMessageText } from '../lib';
 
 const notificationsMenu = () =>
   Keyboard.inlineKeyboard([
@@ -10,6 +10,6 @@ const notificationsMenu = () =>
   ]);
 
 bot.action('warranty_toggle', async (ctx) => {
-  await ctx.answerOnCallback({ notification: '' });
+  await ackCallback(ctx);
   await editMessageText(ctx, '🔔 Отключить/включить напоминания', notificationsMenu());
 });

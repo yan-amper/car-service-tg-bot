@@ -11,4 +11,11 @@ bot.catch((err) => {
   notifyAdmins(`❌ ОШИБКА БОТА ❌\n${String(err)}`);
 });
 
-bot.start();
+// Polling must never end on its own; exit so PM2 restarts the process instead of leaving a zombie
+bot
+  .start()
+  .catch((err) => logError(err, 'Polling crashed'))
+  .finally(() => {
+    console.error('[bot] Long polling stopped, exiting');
+    process.exit(1);
+  });

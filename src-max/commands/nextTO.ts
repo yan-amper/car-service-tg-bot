@@ -1,9 +1,9 @@
 import { bot } from '../config';
-import { editMessageText, formatDate, goBackMenu, getUserId } from '../lib';
+import { ackCallback, editMessageText, formatDate, goBackMenu, getUserId } from '../lib';
 import { WarrantyService } from '../services';
 
 bot.action('warranty_next_to', async (ctx) => {
-  await ctx.answerOnCallback({ notification: '' });
+  await ackCallback(ctx);
   const userId = getUserId(ctx);
   if (!userId) return;
 

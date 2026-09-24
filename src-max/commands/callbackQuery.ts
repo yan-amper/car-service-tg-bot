@@ -3,6 +3,7 @@ import { ProductsApi, RequestData } from '../api';
 import { warrantiesMenu, WarrantyAction } from '../buttons';
 import { bot } from '../config';
 import {
+  ackCallback,
   createImagePath,
   editMessageText,
   goBackMenu,
@@ -25,7 +26,7 @@ bot.on('message_callback', async (ctx) => {
   if (data.startsWith('action-')) {
     const action = data.split('-')[1] as WarrantyAction;
 
-    await ctx.answerOnCallback({ notification: '' });
+    await ackCallback(ctx);
     await editMessageText(ctx, '⏳ Загружаем гарантии...');
 
     try {
@@ -57,7 +58,7 @@ bot.on('message_callback', async (ctx) => {
     const action = args[1] as WarrantyAction;
     const warrantyId = +args[2];
 
-    await ctx.answerOnCallback({ notification: '' });
+    await ackCallback(ctx);
 
     if (action === 'pause') {
       try {
@@ -106,7 +107,7 @@ bot.on('message_callback', async (ctx) => {
 
   // — skip engine volume ——————————————————————————————————————
   if (data === 'skip_engine_volume') {
-    await ctx.answerOnCallback({ notification: '' });
+    await ackCallback(ctx);
     const requestData = requestSteps.get(userId);
     requestSteps.set(userId, { ...requestData, step: 'production_year' });
     await ctx.reply('Введите год выпуска');
@@ -115,7 +116,7 @@ bot.on('message_callback', async (ctx) => {
 
   // — step: engine type ——————————————————————————————————————
   if (data === 'step:engine:petrol' || data === 'step:engine:diesel') {
-    await ctx.answerOnCallback({ notification: '' });
+    await ackCallback(ctx);
     const engineType = data === 'step:engine:petrol' ? 'petrol' : 'diesel';
     const requestData = requestSteps.get(userId);
 
@@ -133,7 +134,7 @@ bot.on('message_callback', async (ctx) => {
 
   // — step: delivery method ———————————————————————————————————
   if (data === 'step:delivery:delivery' || data === 'step:delivery:pickup') {
-    await ctx.answerOnCallback({ notification: '' });
+    await ackCallback(ctx);
     const deliveryMethod = data === 'step:delivery:delivery' ? 'delivery' : 'pickup';
     const requestData = requestSteps.get(userId);
 
@@ -171,7 +172,7 @@ bot.on('message_callback', async (ctx) => {
 
   // — step: broadcast time ————————————————————————————————————
   if (data === 'step:time:0900' || data === 'step:time:1700') {
-    await ctx.answerOnCallback({ notification: '' });
+    await ackCallback(ctx);
     const timeStr = data === 'step:time:0900' ? '09:00' : '17:00';
     const userStep = newBroadcastSteps.get(userId);
 
@@ -195,14 +196,14 @@ bot.on('message_callback', async (ctx) => {
 
   // — step: battery confirm ———————————————————————————————————
   if (data === 'step:confirm:no') {
-    await ctx.answerOnCallback({ notification: '' });
+    await ackCallback(ctx);
     textState.delete(userId);
     batterySelectSteps.delete(userId);
     return;
   }
 
   if (data === 'step:confirm:yes') {
-    await ctx.answerOnCallback({ notification: '' });
+    await ackCallback(ctx);
     const batterySelectData = batterySelectSteps.get(userId);
     batterySelectSteps.set(userId, { ...batterySelectData, step: 'phone' });
 
@@ -218,7 +219,7 @@ bot.on('message_callback', async (ctx) => {
 
   // — select battery ——————————————————————————————————————————
   if (data.startsWith('select-battery-')) {
-    await ctx.answerOnCallback({ notification: '' });
+    await ackCallback(ctx);
     const requestId = +data.split('-')[2];
     const batteryId = +data.split('-')[3];
 
@@ -269,6 +270,6 @@ bot.on('message_callback', async (ctx) => {
     }
   }
 
-  await ctx.answerOnCallback({ notification: '' });
+  await ackCallback(ctx);
   await editMessageText(ctx, '❌ Неверная команда', goBackMenu('menu_main'));
 });

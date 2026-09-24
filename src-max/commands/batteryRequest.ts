@@ -1,9 +1,9 @@
 import { bot } from '../config';
-import { getUserId } from '../lib';
+import { ackCallback, getUserId } from '../lib';
 import { requestSteps, textState } from './state';
 
 bot.action('battery_request', async (ctx) => {
-  await ctx.answerOnCallback({ notification: '' });
+  await ackCallback(ctx);
   const userId = getUserId(ctx);
   if (!userId) return;
 
